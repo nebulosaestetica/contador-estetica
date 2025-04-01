@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contadores Animados</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+        background-image: url('xxxxx'); /* Cambia esto por la ruta de tu imagen */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .container {
+          display: flex;
+          justify-content: center;    
+          flex-direction: column;
+          align-items: center;
+          height: 100vh;
+          width: 90%;
+          background-color: transparent;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      }
+
+      .data {
+        text-align: center;
+        color: #fff;
+        transition: color 0.5s;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      .data:hover {
+        color: #007bff;
+      }
+
+      .count {
+        font-size: 5rem;
+        font-weight: bold;
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .count {
+          font-size: 4rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+         .count {
+          font-size: 3rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <div class="data" id="pacientesData">
+        <h3>PACIENTES</h3>
+        <div class="count" id="pacientesCount">0</div>
+      </div>
+      <div class="data" id="procedimientosData">
+        <h3>TRATAMIENTOS</h3>
+        <div class="count" id="procedimientosCount">0</div>
+      </div>
+      <div class="data" id="experienciaData">
+        <h3>EXPERIENCIA</h3>
+        <div class="count" id="experienciaCount">0</div>
+      </div>
+    </div>
+    <script>
+      const startDate = new Date("2022-07-01");
+      const today = new Date();
+      const totalDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+      const pacientesCount = Math.min(920, totalDays * 2);
+      const procedimientosCount = Math.min(1821, totalDays * 3);
+      const experienciaCount = today.getFullYear() - 2022;
+
+      function animateCount(element, target) {
+        let count = 0;
+        const increment = target / 100;
+        const interval = setInterval(() => {
+          count += increment;
+          if (count >= target) {
+            count = target;
+            clearInterval(interval);
+          }
+          element.innerText = Math.floor(count);
+        }, 20);
+      }
+
+      function startAnimation(id, target) {
+        const element = document.getElementById(id).querySelector(".count");
+        animateCount(element, target);
+      }
+
+      startAnimation("pacientesData", pacientesCount);
+      startAnimation("procedimientosData", procedimientosCount);
+      startAnimation("experienciaData", experienciaCount);
+    </script>
+</body>
+</html>
